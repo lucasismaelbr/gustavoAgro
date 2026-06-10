@@ -856,6 +856,8 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 950px) {
       nav { padding: 1.2rem 2rem; }
+      nav.scrolled { padding: 0.8rem 2rem; }
+      
       .menu-toggle {
         display: flex;
       }
@@ -895,13 +897,30 @@
       }
 
       section { padding: 5rem 1.8rem; }
-      #hero { padding: 8rem 1.8rem 4rem; min-height: auto; }
+      #hero { 
+        padding: 8rem 1.8rem 4rem; 
+        min-height: auto; 
+        flex-direction: column; 
+        align-items: stretch;
+      }
       .hero-container { grid-template-columns: 1fr; text-align: center; gap: 2.8rem; }
       .hero-subtitle { margin-left: auto; margin-right: auto; }
       .hero-cta { justify-content: center; }
       .hero-image-container { max-width: 400px; margin: 0 auto; }
-      .hero-stats { position: static; display: grid; grid-template-columns: 1fr 1fr; margin-top: 3rem; margin-left: -1.8rem; margin-right: -1.8rem; }
-      .stat-item:nth-child(2) { border-right: none; }
+      .hero-stats { 
+        position: static; 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        margin-top: 3rem; 
+        margin-left: -1.8rem; 
+        margin-right: -1.8rem; 
+      }
+      .stat-item {
+        border-right: 1px solid rgba(139, 195, 74, 0.1);
+      }
+      .stat-item:nth-child(2n) { 
+        border-right: none; 
+      }
       .intro-grid, .ilpf-content-layout, .precisao-layout, .bio-layout, .brasil-intro { grid-template-columns: 1fr; gap: 2.5rem; }
       
       .ilpf-img, .precisao-img, .section-illustration, .conclusion-img {
@@ -924,6 +943,7 @@
 
     @media (max-width: 600px) {
       nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.8rem 1.5rem; }
       .ilpf-cards, .tech-grid, .rankings { grid-template-columns: 1fr; }
       h1 { font-size: 2.3rem; }
       .hero-stats { grid-template-columns: 1fr; }
@@ -1418,10 +1438,14 @@
   }, { threshold: 0.12 });
   reveals.forEach(el => observer.observe(el));
 
-  // Nav shrink on scroll
+  // Nav shrink on scroll using CSS class toggle
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
-    nav.style.padding = window.scrollY > 60 ? '0.8rem 4rem' : '1.2rem 4rem';
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
   });
 
   // Interactive Simulator Logic
